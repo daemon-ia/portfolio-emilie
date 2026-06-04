@@ -342,10 +342,9 @@ async function navigateTo(url) {
         requestAnimationFrame(() => { if (linksEl) linksEl.style.transition = ''; });
     }
 
-    // Transition de page uniquement sur desktop
-    const isMobile = window.innerWidth <= 768;
+    const isMobile = true; // Transition de page désactivée
     const [, response] = await Promise.all([
-        isMobile ? Promise.resolve() : overlayShow(),
+        Promise.resolve(),
         fetch(url).catch(() => null)
     ]);
 

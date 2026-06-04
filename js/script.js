@@ -392,7 +392,11 @@ async function navigateTo(url) {
     document.querySelectorAll('.reveal-section').forEach(s => s.classList.add('visible'));
 
     // Attendre que le navigateur rende le nouveau contenu avant de lever l'overlay
-    if (!isMobile) requestAnimationFrame(() => requestAnimationFrame(() => overlayHide()));
+    if (isMobile) {
+        isNavigating = false;
+    } else {
+        requestAnimationFrame(() => requestAnimationFrame(() => overlayHide()));
+    }
 }
 
 // Intercepter tous les clics sur liens internes

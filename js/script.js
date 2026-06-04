@@ -342,9 +342,10 @@ async function navigateTo(url) {
         requestAnimationFrame(() => { if (linksEl) linksEl.style.transition = ''; });
     }
 
-    // Fade in overlay + fetch en parallèle
+    // Transition de page uniquement sur desktop
+    const isMobile = window.innerWidth <= 768;
     const [, response] = await Promise.all([
-        overlayShow(),
+        isMobile ? Promise.resolve() : overlayShow(),
         fetch(url).catch(() => null)
     ]);
 
@@ -391,7 +392,7 @@ async function navigateTo(url) {
     document.querySelectorAll('.reveal-section').forEach(s => s.classList.add('visible'));
 
     // Attendre que le navigateur rende le nouveau contenu avant de lever l'overlay
-    requestAnimationFrame(() => requestAnimationFrame(() => overlayHide()));
+    if (!isMobile) requestAnimationFrame(() => requestAnimationFrame(() => overlayHide()));
 }
 
 // Intercepter tous les clics sur liens internes

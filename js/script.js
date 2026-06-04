@@ -334,9 +334,12 @@ async function navigateTo(url) {
     const linksEl  = document.querySelector('.nav-links');
 
     if (burgerEl && burgerEl.classList.contains('open')) {
+        // Fermer le menu sans animation — la transition de page prend le relais
+        if (linksEl) linksEl.style.transition = 'none';
         burgerEl.classList.remove('open');
-        linksEl && linksEl.classList.remove('open');
+        if (linksEl) linksEl.classList.remove('open');
         document.body.style.overflow = '';
+        requestAnimationFrame(() => { if (linksEl) linksEl.style.transition = ''; });
     }
 
     // Fade in overlay + fetch en parallèle

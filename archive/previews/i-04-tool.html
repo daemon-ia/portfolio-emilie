@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Démo 04 — Configurateur de projet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+        --bg: #F5F0ED;
+        --bg-2: #EFE7E1;
+        --secondary: #D4C6BD;
+        --secondary-dark: #B8A89C;
+        --text: #3D5961;
+        --text-soft: #6B7F86;
+        --border: rgba(61, 89, 97, 0.12);
+        --ease: cubic-bezier(0.65, 0, 0.35, 1);
+        --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+        --shadow-soft:
+            0 1px 0 rgba(255, 255, 255, 0.6) inset,
+            0 4px 12px rgba(61, 89, 97, 0.06),
+            0 12px 30px rgba(61, 89, 97, 0.05);
+    }
+    body {
+        font-family: 'Inter', sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+        padding-bottom: 90px;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding-top: 4rem;
+    }
+    em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 400; }
+    a { color: inherit; text-decoration: none; }
+
+    .config-wrap {
+        max-width: 720px;
+        width: 100%;
+        padding: 0 2rem;
+    }
+    .config-head {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+    .num {
+        font-size: 0.78rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--text-soft);
+        margin-bottom: 1rem;
+        display: inline-block;
+    }
+    .config-head h1 {
+        font-family: 'Fraunces', serif;
+        font-weight: 400;
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        line-height: 1;
+        letter-spacing: -0.02em;
+    }
+
+    /* PROGRESS */
+    .progress {
+        display: flex;
+        gap: 0.4rem;
+        margin-bottom: 2.5rem;
+        justify-content: center;
+    }
+    .progress-dot {
+        width: 36px;
+        height: 4px;
+        background: var(--border);
+        border-radius: 4px;
+        transition: background 0.4s var(--ease);
+    }
+    .progress-dot.active { background: var(--text); }
+    .progress-dot.done { background: var(--secondary-dark); }
+
+    /* CARD */
+    .config-card {
+        background: var(--bg-2);
+        border: 1px solid var(--border);
+        border-radius: 28px;
+        padding: 2.5rem;
+        box-shadow: var(--shadow-soft);
+        min-height: 460px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .step {
+        display: none;
+        animation: fadeIn 0.5s var(--ease-out);
+    }
+    .step.active { display: flex; flex-direction: column; flex: 1; }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .step-num {
+        font-family: 'Fraunces', serif;
+        font-style: italic;
+        color: var(--secondary-dark);
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+    }
+    .step-q {
+        font-family: 'Fraunces', serif;
+        font-weight: 400;
+        font-size: clamp(1.5rem, 3vw, 2.2rem);
+        line-height: 1.15;
+        margin-bottom: 0.5rem;
+    }
+    .step-sub {
+        color: var(--text-soft);
+        margin-bottom: 2rem;
+        font-size: 0.95rem;
+    }
+
+    /* OPTIONS */
+    .options {
+        display: grid;
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+    }
+    .opt {
+        background: var(--bg);
+        border: 1.5px solid var(--border);
+        border-radius: 16px;
+        padding: 1rem 1.3rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        transition: all 0.3s var(--ease);
+        font-family: inherit;
+        font-size: 1rem;
+        text-align: left;
+        color: var(--text);
+    }
+    .opt:hover {
+        border-color: var(--text);
+        transform: translateX(4px);
+    }
+    .opt.selected {
+        background: var(--text);
+        color: var(--bg);
+        border-color: var(--text);
+    }
+    .opt-icon {
+        width: 22px; height: 22px;
+        border-radius: 50%;
+        border: 1.5px solid currentColor;
+        flex-shrink: 0;
+        position: relative;
+        opacity: 0.6;
+    }
+    .opt.selected .opt-icon { opacity: 1; }
+    .opt.selected .opt-icon::after {
+        content: '';
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        width: 10px; height: 10px;
+        border-radius: 50%;
+        background: currentColor;
+    }
+    .opt-text { flex: 1; }
+    .opt-desc {
+        display: block;
+        font-size: 0.8rem;
+        opacity: 0.7;
+        margin-top: 0.1rem;
+    }
+
+    /* INPUT */
+    .config-input {
+        width: 100%;
+        background: var(--bg);
+        border: 1.5px solid var(--border);
+        border-radius: 16px;
+        padding: 1.3rem;
+        font-family: 'Fraunces', serif;
+        font-style: italic;
+        font-size: 1.2rem;
+        color: var(--text);
+        resize: vertical;
+        outline: none;
+        transition: border-color 0.3s var(--ease);
+    }
+    .config-input:focus { border-color: var(--text); }
+    .config-input::placeholder { color: var(--text-soft); opacity: 0.5; }
+
+    /* CONTROLS */
+    .controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: auto;
+        padding-top: 2rem;
+        gap: 1rem;
+    }
+    .btn {
+        padding: 0.85rem 1.6rem;
+        border-radius: 50px;
+        border: none;
+        font-family: inherit;
+        font-size: 0.95rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        transition: all 0.3s var(--ease);
+    }
+    .btn-back {
+        background: transparent;
+        color: var(--text-soft);
+    }
+    .btn-back:hover { color: var(--text); }
+    .btn-next {
+        background: var(--text);
+        color: var(--bg);
+        box-shadow:
+            0 1px 0 rgba(255, 255, 255, 0.15) inset,
+            0 6px 14px rgba(61, 89, 97, 0.18);
+    }
+    .btn-next:hover {
+        background: var(--secondary-dark);
+        transform: translateY(-2px);
+    }
+    .btn-next:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    /* RESULT */
+    .result h2 {
+        font-family: 'Fraunces', serif;
+        font-weight: 400;
+        font-size: clamp(1.8rem, 4vw, 2.5rem);
+        line-height: 1;
+        margin-bottom: 1.5rem;
+    }
+    .summary {
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .summary-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.6rem 0;
+        border-bottom: 1px solid var(--border);
+        font-size: 0.95rem;
+    }
+    .summary-row:last-child { border-bottom: none; }
+    .summary-row span:first-child {
+        color: var(--text-soft);
+        font-size: 0.85rem;
+        letter-spacing: 0.05em;
+    }
+    .summary-row span:last-child {
+        font-family: 'Fraunces', serif;
+        font-style: italic;
+    }
+    .estimate {
+        background: var(--text);
+        color: var(--bg);
+        border-radius: 16px;
+        padding: 1.5rem;
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+    .estimate-label {
+        font-size: 0.78rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        opacity: 0.7;
+        margin-bottom: 0.5rem;
+    }
+    .estimate-value {
+        font-family: 'Fraunces', serif;
+        font-style: italic;
+        font-size: clamp(2rem, 5vw, 3rem);
+        line-height: 1;
+    }
+    .estimate-note {
+        font-size: 0.85rem;
+        opacity: 0.7;
+        margin-top: 0.6rem;
+    }
+
+    /* SWITCHER */
+    .demo-switcher {
+        position: fixed;
+        bottom: 16px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 200;
+        background: var(--text);
+        color: var(--bg);
+        border-radius: 50px;
+        padding: 0.4rem;
+        display: flex;
+        gap: 0.25rem;
+        box-shadow:
+            0 1px 0 rgba(255, 255, 255, 0.15) inset,
+            0 8px 24px rgba(61, 89, 97, 0.25);
+        font-size: 0.8rem;
+    }
+    .demo-switcher a {
+        padding: 0.5rem 0.9rem;
+        border-radius: 50px;
+        opacity: 0.65;
+    }
+    .demo-switcher a:hover { opacity: 1; }
+    .demo-switcher a.active {
+        background: var(--bg);
+        color: var(--text);
+        opacity: 1;
+    }
+    .demo-switcher .home {
+        padding: 0.5rem 0.7rem;
+        opacity: 0.5;
+    }
+    @media (max-width: 600px) {
+        .demo-switcher { font-size: 0.7rem; padding: 0.3rem; }
+        .demo-switcher a { padding: 0.4rem 0.6rem; }
+        .config-card { padding: 2rem 1.5rem; }
+    }
+</style>
+</head>
+<body>
+
+    <div class="config-wrap">
+        <div class="config-head">
+            <span class="num">— 04 / Configurateur</span>
+            <h1>Démarrons votre <em>projet</em></h1>
+        </div>
+
+        <div class="progress" id="progress"></div>
+
+        <div class="config-card" id="card">
+
+            <!-- STEP 1 -->
+            <div class="step active" data-step="1">
+                <span class="step-num">— 01 / Le projet</span>
+                <h2 class="step-q">Quel type de projet vous porte ?</h2>
+                <p class="step-sub">Choisissez ce qui correspond le mieux. On affinera ensemble ensuite.</p>
+                <div class="options" data-question="type">
+                    <button class="opt" data-value="identite" data-price="2500">
+                        <span class="opt-icon"></span>
+                        <span class="opt-text">Identité visuelle <span class="opt-desc">Logo, charte, déclinaisons</span></span>
+                    </button>
+                    <button class="opt" data-value="site" data-price="3500">
+                        <span class="opt-icon"></span>
+                        <span class="opt-text">Site web <span class="opt-desc">Vitrine, portfolio, blog</span></span>
+                    </button>
+                    <button class="opt" data-value="ecommerce" data-price="5500">
+                        <span class="opt-icon"></span>
+                        <span class="opt-text">E-commerce <span class="opt-desc">Boutique en ligne, paiement</span></span>
+                    </button>
+                    <button class="opt" data-value="app" data-price="7500">
+                        <span class="opt-icon"></span>
+                        <span class="opt-text">Application <span class="opt-desc">Web app, mobile</span></span>
+                    </button>
+                </div>
+                <div class="controls">
+                    <span></span>
+                    <button class="btn btn-next" disabled>Suivant
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- STEP 2 -->
+            <div class="step" data-step="2">
+                <span class="step-num">— 02 / L'ampleur</span>
+                <h2 class="step-q">Quelle est l'ampleur prévue ?</h2>
+                <p class="step-sub">Cela m'aide à estimer le temps nécessaire.</p>
+                <div class="options" data-question="scope">
+                    <button class="opt" data-value="petit" data-multiplier="0.7">
+                        <span class="opt-icon"></span>
+                        <span class="opt-text">Petit <span class="opt-desc">Projet ciblé, peu de pages</span></span>
+                    </button>
+                    <button class="opt" data-value="moyen" data-multiplier="1">
+                        <span class="opt-icon"></span>
+                        <span class="opt-text">Moyen <span class="opt-desc">Projet standard</span></span>
+                    </button>
+                    <button class="opt" data-value="ambitieux" data-multiplier="1.6">
+                        <span class="opt-icon"></span>
+                        <span class="opt-text">Ambitieux <span class="opt-desc">Beaucoup de contenu, fonctionnalités</span></span>
+                    </button>
+                </div>
+                <div class="controls">
+                    <button class="btn btn-back">← Retour</button>
+                    <button class="btn btn-next" disabled>Suivant
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- STEP 3 -->
+            <div class="step" data-step="3">
+                <span class="step-num">— 03 / Le délai</span>
+                <h2 class="step-q">Vous avez une échéance ?</h2>
+                <p class="step-sub">Les délais serrés engagent une majoration.</p>
+                <div class="options" data-question="delay">
+                    <button class="opt" data-value="flexible" data-multiplier="1">
+                        <span class="opt-icon"></span>
+                        <span class="opt-text">Flexible <span class="opt-desc">Plus de 3 mois</span></span>
+                    </button>
+                    <button class="opt" data-value="standard" data-multiplier="1.1">
+                        <span class="opt-icon"></span>
+                        <span class="opt-text">Standard <span class="opt-desc">1 à 3 mois</span></span>
+                    </button>
+                    <button class="opt" data-value="urgent" data-multiplier="1.4">
+                        <span class="opt-icon"></span>
+                        <span class="opt-text">Urgent <span class="opt-desc">Moins d'un mois</span></span>
+                    </button>
+                </div>
+                <div class="controls">
+                    <button class="btn btn-back">← Retour</button>
+                    <button class="btn btn-next" disabled>Suivant
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- STEP 4 -->
+            <div class="step" data-step="4">
+                <span class="step-num">— 04 / Parlez-moi</span>
+                <h2 class="step-q">Décrivez votre projet en quelques mots</h2>
+                <p class="step-sub">Optionnel mais utile pour préparer notre échange.</p>
+                <textarea class="config-input" id="description" rows="5" placeholder="Votre activité, vos envies, vos contraintes…"></textarea>
+                <div class="controls">
+                    <button class="btn btn-back">← Retour</button>
+                    <button class="btn btn-next">Voir l'estimation
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- RESULT -->
+            <div class="step result" data-step="5">
+                <span class="step-num">— Résumé</span>
+                <h2>Voici votre <em>estimation</em></h2>
+
+                <div class="summary" id="summary"></div>
+
+                <div class="estimate">
+                    <div class="estimate-label">Fourchette estimée</div>
+                    <div class="estimate-value" id="estimate-value">—</div>
+                    <div class="estimate-note">Estimation indicative · Devis détaillé après échange</div>
+                </div>
+
+                <div class="controls">
+                    <button class="btn btn-back">← Modifier</button>
+                    <a href="../index.html#contact" class="btn btn-next">Continuer l'échange
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <nav class="demo-switcher">
+        <a href="interactives-index.html" class="home" title="Index">◉</a>
+        <a href="i-01-scroll.html">01 Scroll</a>
+        <a href="i-02-case.html">02 Cas d'étude</a>
+        <a href="i-03-webgl.html">03 Particules</a>
+        <a href="i-04-tool.html" class="active">04 Outil</a>
+    </nav>
+
+<script>
+    const totalSteps = 4;
+    let currentStep = 1;
+    const answers = { type: null, scope: null, delay: null, description: '' };
+    const labels = {
+        type: { identite: 'Identité visuelle', site: 'Site web', ecommerce: 'E-commerce', app: 'Application' },
+        scope: { petit: 'Petit', moyen: 'Moyen', ambitieux: 'Ambitieux' },
+        delay: { flexible: 'Flexible', standard: 'Standard', urgent: 'Urgent' }
+    };
+    let basePrice = 0, scopeMult = 1, delayMult = 1;
+
+    // Build progress dots
+    const progressEl = document.getElementById('progress');
+    for (let i = 0; i < totalSteps; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'progress-dot' + (i === 0 ? ' active' : '');
+        progressEl.appendChild(dot);
+    }
+
+    function updateProgress() {
+        document.querySelectorAll('.progress-dot').forEach((d, i) => {
+            d.classList.remove('active', 'done');
+            if (i + 1 < currentStep) d.classList.add('done');
+            else if (i + 1 === currentStep) d.classList.add('active');
+        });
+    }
+
+    function showStep(n) {
+        document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+        const step = document.querySelector(`.step[data-step="${n}"]`);
+        if (step) step.classList.add('active');
+        currentStep = n;
+        if (n <= totalSteps) updateProgress();
+    }
+
+    // Options click
+    document.querySelectorAll('.options').forEach(group => {
+        group.querySelectorAll('.opt').forEach(opt => {
+            opt.addEventListener('click', () => {
+                group.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+                opt.classList.add('selected');
+                const q = group.dataset.question;
+                answers[q] = opt.dataset.value;
+                if (opt.dataset.price) basePrice = parseInt(opt.dataset.price);
+                if (q === 'scope') scopeMult = parseFloat(opt.dataset.multiplier);
+                if (q === 'delay') delayMult = parseFloat(opt.dataset.multiplier);
+                // Enable next button
+                const next = group.closest('.step').querySelector('.btn-next');
+                if (next) next.disabled = false;
+            });
+        });
+    });
+
+    // Next buttons
+    document.querySelectorAll('.btn-next').forEach(btn => {
+        if (btn.tagName === 'A') return;
+        btn.addEventListener('click', () => {
+            if (btn.disabled) return;
+            if (currentStep === 4) {
+                answers.description = document.getElementById('description').value;
+                renderResult();
+                showStep(5);
+            } else if (currentStep < totalSteps) {
+                showStep(currentStep + 1);
+            }
+        });
+    });
+
+    // Back buttons
+    document.querySelectorAll('.btn-back').forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (currentStep > 1) showStep(currentStep - 1);
+        });
+    });
+
+    function renderResult() {
+        const summary = document.getElementById('summary');
+        summary.innerHTML = `
+            <div class="summary-row"><span>Type</span><span>${labels.type[answers.type] || '—'}</span></div>
+            <div class="summary-row"><span>Ampleur</span><span>${labels.scope[answers.scope] || '—'}</span></div>
+            <div class="summary-row"><span>Délai</span><span>${labels.delay[answers.delay] || '—'}</span></div>
+        `;
+        const low = Math.round(basePrice * scopeMult * delayMult);
+        const high = Math.round(low * 1.4);
+        document.getElementById('estimate-value').textContent = `${low.toLocaleString('fr-FR')} — ${high.toLocaleString('fr-FR')} €`;
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prévisualisations des interactivités — Emilie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+        font-family: 'Inter', sans-serif;
+        background: #F5F0ED;
+        color: #3D5961;
+        min-height: 100vh;
+        padding: 4rem 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    h1 {
+        font-family: 'Fraunces', serif;
+        font-weight: 400;
+        font-style: italic;
+        font-size: clamp(2.5rem, 6vw, 5rem);
+        line-height: 1;
+        letter-spacing: -0.03em;
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+    .subtitle {
+        color: #6B7F86;
+        max-width: 600px;
+        text-align: center;
+        margin-bottom: 4rem;
+        font-size: 1.05rem;
+    }
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        max-width: 1100px;
+        width: 100%;
+    }
+    .card {
+        background: #EFE7E1;
+        border: 1px solid rgba(61, 89, 97, 0.12);
+        border-radius: 20px;
+        padding: 2rem;
+        text-decoration: none;
+        color: inherit;
+        transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        box-shadow:
+            0 1px 0 rgba(255, 255, 255, 0.6) inset,
+            0 4px 12px rgba(61, 89, 97, 0.06),
+            0 12px 30px rgba(61, 89, 97, 0.05);
+    }
+    .card:hover {
+        transform: translateY(-6px);
+        background: #F5F0ED;
+        box-shadow:
+            0 1px 0 rgba(255, 255, 255, 0.6) inset,
+            0 12px 24px rgba(61, 89, 97, 0.08),
+            0 28px 60px rgba(61, 89, 97, 0.1);
+    }
+    .card-num {
+        font-family: 'Fraunces', serif;
+        font-style: italic;
+        font-size: 3rem;
+        color: #B8A89C;
+        line-height: 1;
+        margin-bottom: 1rem;
+    }
+    .card h2 {
+        font-family: 'Fraunces', serif;
+        font-weight: 400;
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+    .card p {
+        color: #6B7F86;
+        font-size: 0.95rem;
+        margin-bottom: 1.5rem;
+    }
+    .arrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+    }
+    .card:hover .arrow svg { transform: translateX(4px); }
+    .arrow svg { transition: transform 0.3s ease; }
+    .footer-note {
+        margin-top: 4rem;
+        font-size: 0.85rem;
+        color: #8B9DA3;
+        text-align: center;
+    }
+    .footer-note a { color: #3D5961; margin: 0 0.5rem; }
+</style>
+</head>
+<body>
+
+    <h1>4 interactivités à tester</h1>
+    <p class="subtitle">Chaque démo montre un type d'interaction signature pour ton portfolio. Niveau "moyen" : une section devient une vraie expérience.</p>
+
+    <div class="grid">
+        <a href="i-01-scroll.html" class="card">
+            <div class="card-num">01</div>
+            <h2>Scroll storytelling</h2>
+            <p>Les sections se transforment au scroll. Mots qui se construisent, masque qui se révèle, scroll horizontal sur les projets.</p>
+            <span class="arrow">Voir la démo
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+        </a>
+
+        <a href="i-02-case.html" class="card">
+            <div class="card-num">02</div>
+            <h2>Cas d'étude interactif</h2>
+            <p>Page projet avec slider avant/après, gallery au hover, lecture vidéo. Le projet devient une mini-expérience.</p>
+            <span class="arrow">Voir la démo
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+        </a>
+
+        <a href="i-03-webgl.html" class="card">
+            <div class="card-num">03</div>
+            <h2>Particules / Canvas</h2>
+            <p>Fluide qui suit la souris, particules colorées, distorsion d'image au hover. Pur Canvas, pas de Three.js.</p>
+            <span class="arrow">Voir la démo
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+        </a>
+
+        <a href="i-04-tool.html" class="card">
+            <div class="card-num">04</div>
+            <h2>Configurateur de projet</h2>
+            <p>Formulaire conversationnel multi-étapes : "Quel projet ? Quel budget ? Quel délai ?" → estimation et briefing préparé.</p>
+            <span class="arrow">Voir la démo
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+        </a>
+    </div>
+
+    <p class="footer-note">
+        <a href="index.html">← Démos de menus</a> ·
+        <a href="../index.html">Retour au portfolio</a>
+    </p>
+
+</body>
+</html>

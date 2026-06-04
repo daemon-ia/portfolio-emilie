@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Démo 01 — Floating Dock</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+    /* ===== TOP BAR MINIMAL ===== */
+    .top-bar {
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        padding: 1.5rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 50;
+        font-size: 0.85rem;
+        color: var(--text-soft);
+    }
+    .top-bar img { height: 36px; }
+    .top-bar .status {
+        display: flex; align-items: center; gap: 0.5rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+    }
+    .top-bar .status::before {
+        content: '';
+        width: 7px; height: 7px;
+        border-radius: 50%;
+        background: #6BA88B;
+        animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+        0%, 100% { box-shadow: 0 0 0 4px rgba(107, 168, 139, 0.18); }
+        50% { box-shadow: 0 0 0 8px rgba(107, 168, 139, 0); }
+    }
+
+    /* ===== FLOATING DOCK ===== */
+    .dock {
+        position: fixed;
+        bottom: 90px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 100;
+        background: rgba(245, 240, 237, 0.7);
+        backdrop-filter: blur(24px) saturate(180%);
+        -webkit-backdrop-filter: blur(24px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        border-radius: 60px;
+        padding: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        box-shadow:
+            0 1px 0 rgba(255, 255, 255, 0.8) inset,
+            0 -1px 0 rgba(61, 89, 97, 0.08) inset,
+            0 10px 30px rgba(61, 89, 97, 0.12),
+            0 30px 60px rgba(61, 89, 97, 0.1);
+    }
+    .dock-link {
+        position: relative;
+        padding: 0.7rem 1.4rem;
+        font-size: 0.88rem;
+        font-weight: 500;
+        color: var(--text);
+        border-radius: 50px;
+        transition: color 0.3s var(--ease);
+        z-index: 1;
+    }
+    .dock-link:hover { color: var(--text); }
+    .dock-indicator {
+        position: absolute;
+        top: 50%;
+        height: calc(100% - 1rem);
+        background: var(--text);
+        border-radius: 50px;
+        transform: translateY(-50%);
+        transition: left 0.5s var(--ease-out), width 0.5s var(--ease-out);
+        z-index: 0;
+    }
+    .dock-link.active { color: var(--bg); }
+    .dock-add {
+        width: 38px; height: 38px;
+        border-radius: 50%;
+        background: var(--text);
+        color: var(--bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 0.4rem;
+        transition: transform 0.4s var(--ease);
+        cursor: pointer;
+    }
+    .dock-add:hover { transform: rotate(90deg); }
+
+    @media (max-width: 600px) {
+        .dock { bottom: 80px; padding: 0.35rem; }
+        .dock-link { padding: 0.55rem 1rem; font-size: 0.8rem; }
+        .dock-add { width: 32px; height: 32px; }
+    }
+</style>
+</head>
+<body>
+
+    <header class="top-bar">
+        <a href="../index.html"><img src="../assets/Logo-Emilie.png" alt="Emilie"></a>
+        <span class="status">Disponible 2026</span>
+    </header>
+
+    <nav class="dock">
+        <div class="dock-indicator"></div>
+        <a href="#home" class="dock-link active">Accueil</a>
+        <a href="#work" class="dock-link">Projets</a>
+        <a href="#about" class="dock-link">À propos</a>
+        <a href="#contact" class="dock-link">Contact</a>
+        <div class="dock-add" title="Menu">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+        </div>
+    </nav>
+
+    <section id="home" class="demo-section">
+        <div>
+            <span class="num">— 01 / Démo Floating Dock</span>
+            <h1>Menu <em>flottant</em></h1>
+            <p>Le menu reste accessible en bas, comme un dock. L'indicateur sombre suit le lien actif en glissant. Scrolle pour voir l'effet glassmorphism sur le contenu.</p>
+        </div>
+    </section>
+
+    <section id="work" class="demo-section alt">
+        <div>
+            <span class="num">— 02 / Projets</span>
+            <h1>Section <em>travaux</em></h1>
+            <p>Scrolle encore pour voir comment le dock interagit avec le défilement.</p>
+        </div>
+    </section>
+
+    <section id="about" class="demo-section">
+        <div>
+            <span class="num">— 03 / À propos</span>
+            <h1>Section <em>bio</em></h1>
+            <p>L'indicateur reste sur la position cliquée. Tu peux changer ça pour qu'il suive le scroll (scrollspy) si tu veux.</p>
+        </div>
+    </section>
+
+    <section id="contact" class="demo-section alt">
+        <div>
+            <span class="num">— 04 / Contact</span>
+            <h1>Section <em>contact</em></h1>
+            <p>Fin de la démo. Utilise la barre du bas pour comparer avec les 3 autres menus.</p>
+        </div>
+    </section>
+
+    <nav class="demo-switcher">
+        <a href="index.html" class="home" title="Index">◉</a>
+        <a href="01-dock.html" class="active">01 Dock</a>
+        <a href="02-fullscreen.html">02 Fullscreen</a>
+        <a href="03-sidebar.html">03 Sidebar</a>
+        <a href="04-tracker.html">04 Tracker</a>
+    </nav>
+
+<script>
+    // Indicator que suit le lien actif
+    const links = document.querySelectorAll('.dock-link');
+    const indicator = document.querySelector('.dock-indicator');
+
+    function moveIndicator(el) {
+        const rect = el.getBoundingClientRect();
+        const dockRect = el.parentElement.getBoundingClientRect();
+        indicator.style.left = (rect.left - dockRect.left) + 'px';
+        indicator.style.width = rect.width + 'px';
+    }
+
+    // Position initiale
+    window.addEventListener('load', () => {
+        const active = document.querySelector('.dock-link.active');
+        if (active) moveIndicator(active);
+    });
+
+    links.forEach(link => {
+        link.addEventListener('click', () => {
+            links.forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+            moveIndicator(link);
+        });
+    });
+
+    // Scrollspy
+    const sections = document.querySelectorAll('.demo-section');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+                const id = entry.target.id;
+                const link = document.querySelector(`.dock-link[href="#${id}"]`);
+                if (link) {
+                    links.forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                    moveIndicator(link);
+                }
+            }
+        });
+    }, { threshold: 0.5 });
+    sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>

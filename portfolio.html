@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Projets de web design et identités visuelles par Emilie Roupsard.">
+    <title>Projets — Emilie Roupsard</title>
+    <link rel="icon" type="image/png" href="assets/Logo-Emilie.png">
+    <link rel="preload" href="assets/fonts/Italianno.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="page-transition" aria-hidden="true"></div>
+
+    <nav class="nav">
+        <a href="index.html" class="nav-logo">
+            <img src="assets/Logo-Emilie.png" alt="Emilie Roupsard">
+        </a>
+        <button class="nav-burger" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links">
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="apropos.html">À propos</a></li>
+            <li><a href="portfolio.html" class="active">Projets</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main class="projects-main">
+
+        <section class="projects-section">
+
+            <div class="projects-header reveal-section">
+                <h1 class="projects-title">Projets</h1>
+                <p class="projects-sub">Chaque projet raconte une histoire.</p>
+            </div>
+
+            <div class="filter-bar">
+                <button class="filter-btn active" data-filter="all">Tous</button>
+                <button class="filter-btn" data-filter="app">Application</button>
+                <button class="filter-btn" data-filter="web">Web design</button>
+            </div>
+
+            <div class="projects-grid">
+
+                <article class="project-card" data-category="app"
+                    data-title="Megalith France" data-tag="Application"
+                    data-imgs="assets/projects/megalith-1.jpeg,assets/projects/megalith-2.jpeg,assets/projects/megalith-3.jpeg,assets/projects/icon-ecran.png,assets/projects/tshirt-megalith.jpeg"
+                    data-captions="Dashboard utilisateur,Système d'exploits et progression,Carte interactive des mégalithes,Icône de l'application sur fond d'écran téléphone,T-shirt Megalith France"
+                    data-detail="PWA mobile-first de recensement et exploration des mégalithes de France (menhirs, dolmens, tumulus). Conçue, designée et développée de A à Z : cartographie interactive avec clustering, radar GPS à 100 m, système communautaire d'ajout et de validation des sites, authentification utilisateur, interface bilingue FR/EN."
+                    data-tools="Vanilla JS · Leaflet.js · PHP · MySQL · PWA · Figma"
+                    data-logo="assets/projects/megalith-logo.png"
+                    data-colors="#C5A059,#1C2B30,#243840,#F0E8D8"
+                    data-fonts="Cinzel · Playfair Display"
+                    data-url="https://megalithes-france.fr/">
+                    <div class="project-thumb" style="background: linear-gradient(160deg, #39464B 0%, #202B30 100%);">
+                        <img src="assets/projects/icon-ecran.png" alt="Megalith France">
+                    </div>
+                    <div class="project-info">
+                        <span class="project-tag">Application</span>
+                        <h3 class="project-title">Megalith France</h3>
+                    </div>
+                </article>
+
+                <article class="project-card" data-category="web"
+                    data-title="Daemon-IA" data-tag="Web design"
+                    data-imgs="assets/projects/daemon1.JPG,assets/projects/daemon2.JPG,assets/projects/daemon-2.jpg"
+                    data-captions="Services,Processus,Service - Micro SaaS"
+                    data-detail="Site vitrine professionnel conçu de A à Z pour capter des prospects et crédibiliser la marque. Présentation de l'expertise en automatisation, IA et Micro-SaaS sur-mesure. Maquette Figma, intégration WordPress + Elementor avec personnalisation CSS et JavaScript poussée - micro-interactions, focus dynamique vert wasabi, navigation mobile fluide. Logo réalisé sur Illustrator."
+                    data-tools="WordPress · Elementor · CSS · JavaScript · Figma · Illustrator"
+                    data-colors="#121212,#B4F857,#FFFFFF,#333333"
+                    data-fonts="Montserrat · Plus Jakarta Sans"
+                    data-logo="assets/projects/daemon-logo.svg"
+                    data-url="https://daemon-ia.fr">
+                    <div class="project-thumb" style="background: radial-gradient(ellipse 60% 70% at 50% -10%, rgba(180,248,87,0.45) 0%, #1a2808 45%, #121212 75%);">
+                        <img src="assets/projects/daemon-logo.svg" alt="Daemon-IA" style="max-width: 65%; max-height: 65%;">
+                    </div>
+                    <div class="project-info">
+                        <span class="project-tag">Web design</span>
+                        <h3 class="project-title">Daemon-IA</h3>
+                    </div>
+                </article>
+
+
+                <article class="project-card" data-category="web"
+                    data-title="VOLT" data-tag="Concept"
+                    data-imgs="assets/projects/demo-volt1.jpg"
+                    data-captions="Site vitrine"
+                    data-detail="Démo concept pour une entreprise d'électricité et domotique en Bretagne. Site premium avec animations GSAP, scroll fluide Lenis, sections interactives."
+                    data-tools="HTML · CSS · JS · GSAP · Lenis"
+                    data-colors="#060608,#19e3ff,#ffe600,#8df3ff,#f4f4f6"
+                    data-fonts="Archivo Expanded"
+                    data-url="https://demo-volt.vercel.app/">
+                    <div class="project-thumb" style="background: #060608;">
+                        <img src="assets/projects/volt-logo.svg" alt="VOLT" style="width: 55%; height: 55%; max-width: unset; max-height: unset; object-fit: contain;">
+                    </div>
+                    <div class="project-info">
+                        <span class="project-tag">Concept</span>
+                        <h3 class="project-title">VOLT</h3>
+                    </div>
+                </article>
+
+                <article class="project-card project-card--soon" data-category="web"
+                    data-title="Demacia Consulting"
+                    data-tag="Web design"
+                    data-detail="Site vitrine en cours de réalisation pour Demacia Consulting, cabinet de conseil en IA et automatisation pour PME. Design minimaliste et professionnel orienté B2B."
+                    data-tools="HTML · CSS · JS"
+                    data-colors="#1A1A1A,#FFFFFF,#0066FF,#38A486,#F5F5F5"
+                    data-url="">
+                    <div class="project-thumb" style="background: #FAFCFC;">
+                        <img src="assets/projects/demacia-logo.png" alt="Demacia Consulting">
+                    </div>
+                    <div class="project-info">
+                        <span class="project-tag">En cours</span>
+                        <h3 class="project-title">Demacia Consulting</h3>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- Modal projet -->
+            <div class="project-modal" id="projectModal" role="dialog" aria-modal="true" aria-hidden="true">
+                <div class="modal-backdrop"></div>
+                <div class="modal-card">
+                    <button class="modal-close" aria-label="Fermer">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <div class="modal-thumb" id="modalThumb">
+                        <img id="modalImg" src="" alt="">
+                        <button class="modal-prev" id="modalPrev" aria-label="Image précédente">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </button>
+                        <button class="modal-next" id="modalNext" aria-label="Image suivante">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </button>
+                        <div class="modal-dots" id="modalDots"></div>
+                        <p class="modal-caption" id="modalCaption"></p>
+                    </div>
+                    <div class="modal-body">
+                        <span class="modal-tag" id="modalTag"></span>
+                        <h2 class="modal-title" id="modalTitle"></h2>
+                        <p class="modal-detail" id="modalDetail"></p>
+                        <div class="modal-colors" id="modalColorsWrap" style="display:none;">
+                            <span class="modal-meta-label">Couleurs</span>
+                            <div class="modal-swatches" id="modalSwatches"></div>
+                        </div>
+                        <div class="modal-fonts" id="modalFontsWrap" style="display:none;">
+                            <span class="modal-meta-label">Typographies</span>
+                            <span class="modal-fonts-list" id="modalFonts"></span>
+                        </div>
+                        <div class="modal-logo-wrap" id="modalLogoWrap" style="display:none;">
+                            <span class="modal-meta-label">Logo</span>
+                            <img class="modal-logo" id="modalLogo" src="" alt="">
+                        </div>
+                        <div class="modal-tools" id="modalToolsWrap">
+                            <span class="modal-meta-label">Outils</span>
+                            <span class="modal-tools-list" id="modalTools"></span>
+                        </div>
+                        <a class="modal-link" id="modalLink" href="#" target="_blank" rel="noopener noreferrer" style="display:none;">
+                            <span>Voir le projet</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <span>© <span id="year"></span> Emilie Roupsard</span>
+        <div class="footer-socials">
+            <a href="https://www.linkedin.com/in/emilie-roupsard-15a058191/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="mentions-legales.html">Mentions légales</a>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

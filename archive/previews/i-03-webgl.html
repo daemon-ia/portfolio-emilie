@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Démo 03 — Particules & distorsion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+        --bg: #F5F0ED;
+        --bg-2: #EFE7E1;
+        --secondary: #D4C6BD;
+        --secondary-dark: #B8A89C;
+        --text: #3D5961;
+        --text-soft: #6B7F86;
+        --border: rgba(61, 89, 97, 0.12);
+        --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    body {
+        font-family: 'Inter', sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+        padding-bottom: 90px;
+    }
+    em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 400; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ============ HERO PARTICULES ============ */
+    .hero-particles {
+        min-height: 90vh;
+        padding: 7rem 2rem 3rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+    }
+    #particles {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+    }
+    .hero-particles-content {
+        position: relative;
+        z-index: 1;
+        pointer-events: none;
+    }
+    .num {
+        font-size: 0.78rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--text-soft);
+        margin-bottom: 1.5rem;
+    }
+    .hero-particles h1 {
+        font-family: 'Fraunces', serif;
+        font-weight: 400;
+        font-size: clamp(3rem, 9vw, 7rem);
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        margin-bottom: 1.5rem;
+    }
+    .hero-particles p {
+        max-width: 500px;
+        margin: 0 auto;
+        color: var(--text-soft);
+    }
+    .hint {
+        margin-top: 2rem;
+        font-size: 0.85rem;
+        color: var(--text-soft);
+        animation: pulse-hint 2s infinite;
+    }
+    @keyframes pulse-hint {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.4; }
+    }
+
+    /* ============ FLUIDE / TRAIL ============ */
+    .fluid-section {
+        min-height: 80vh;
+        padding: 5rem 2rem;
+        background: var(--text);
+        color: var(--bg);
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+    #fluid {
+        position: absolute; inset: 0;
+        z-index: 0;
+    }
+    .fluid-content {
+        position: relative; z-index: 1;
+        pointer-events: none;
+    }
+    .fluid-content h2 {
+        font-family: 'Fraunces', serif;
+        font-weight: 400;
+        font-size: clamp(2.5rem, 7vw, 5rem);
+        line-height: 1;
+        margin-bottom: 1rem;
+    }
+    .fluid-content p {
+        max-width: 500px;
+        margin: 0 auto;
+        opacity: 0.7;
+    }
+
+    /* ============ IMAGE DISTORSION ============ */
+    .distort-section {
+        padding: 7rem 2rem;
+        max-width: 1100px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .distort-section h2 {
+        font-family: 'Fraunces', serif;
+        font-weight: 400;
+        font-size: clamp(2rem, 5vw, 4rem);
+        margin-bottom: 1rem;
+    }
+    .distort-section .label {
+        font-size: 0.78rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--text-soft);
+        margin-bottom: 1rem;
+        display: block;
+    }
+    .distort-wrap {
+        margin-top: 4rem;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+    .distort-card {
+        position: relative;
+        aspect-ratio: 4/5;
+        border-radius: 24px;
+        overflow: hidden;
+        cursor: pointer;
+    }
+    .distort-card canvas {
+        position: absolute; inset: 0;
+        width: 100% !important;
+        height: 100% !important;
+    }
+    .distort-card .info {
+        position: absolute;
+        bottom: 1.5rem; left: 1.5rem;
+        color: var(--bg);
+        z-index: 2;
+        text-align: left;
+    }
+    .distort-card .info h3 {
+        font-family: 'Fraunces', serif;
+        font-weight: 400;
+        font-size: 1.5rem;
+        margin-bottom: 0.3rem;
+    }
+    .distort-card .info span {
+        font-size: 0.8rem;
+        opacity: 0.85;
+    }
+
+    @media (max-width: 768px) {
+        .distort-wrap { grid-template-columns: 1fr; }
+    }
+
+    /* ============ SWITCHER ============ */
+    .demo-switcher {
+        position: fixed;
+        bottom: 16px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 200;
+        background: var(--text);
+        color: var(--bg);
+        border-radius: 50px;
+        padding: 0.4rem;
+        display: flex;
+        gap: 0.25rem;
+        box-shadow:
+            0 1px 0 rgba(255, 255, 255, 0.15) inset,
+            0 8px 24px rgba(61, 89, 97, 0.25);
+        font-size: 0.8rem;
+    }
+    .demo-switcher a {
+        padding: 0.5rem 0.9rem;
+        border-radius: 50px;
+        opacity: 0.65;
+    }
+    .demo-switcher a:hover { opacity: 1; }
+    .demo-switcher a.active {
+        background: var(--bg);
+        color: var(--text);
+        opacity: 1;
+    }
+    .demo-switcher .home {
+        padding: 0.5rem 0.7rem;
+        opacity: 0.5;
+    }
+    @media (max-width: 600px) {
+        .demo-switcher { font-size: 0.7rem; padding: 0.3rem; }
+        .demo-switcher a { padding: 0.4rem 0.6rem; }
+    }
+</style>
+</head>
+<body>
+
+    <section class="hero-particles">
+        <canvas id="particles"></canvas>
+        <div class="hero-particles-content">
+            <span class="num">— 03 / Particules</span>
+            <h1>Bouge ta <em>souris</em></h1>
+            <p>Les particules suivent ton curseur avec un effet ressort. Pur Canvas 2D, aucune librairie externe, ~5 Ko.</p>
+            <p class="hint">↑ Effet 1 · Particules attirées par le curseur ↑</p>
+        </div>
+    </section>
+
+    <section class="fluid-section">
+        <canvas id="fluid"></canvas>
+        <div class="fluid-content">
+            <span class="num" style="color: rgba(245,240,237,0.6);">— Effet 2</span>
+            <h2>Trace <em>lumineuse</em></h2>
+            <p>Un trail organique qui s'estompe. Très utilisé sur les portfolios créatifs pour donner un côté magique.</p>
+        </div>
+    </section>
+
+    <section class="distort-section">
+        <span class="label">— Effet 3 / Distorsion au hover</span>
+        <h2>Survole les <em>images</em></h2>
+        <p style="color: var(--text-soft); max-width: 500px; margin: 1rem auto 0;">Les pixels se déplacent au survol — effet "fluide" qui se résorbe quand tu sors. Léger, en Canvas 2D.</p>
+
+        <div class="distort-wrap">
+            <div class="distort-card">
+                <canvas data-color1="#D4C6BD" data-color2="#B8A89C"></canvas>
+                <div class="info"><h3>Maison Lumière</h3><span>Identité · 2026</span></div>
+            </div>
+            <div class="distort-card">
+                <canvas data-color1="#6B7F86" data-color2="#3D5961"></canvas>
+                <div class="info"><h3>Atelier B.</h3><span>Web · 2026</span></div>
+            </div>
+        </div>
+    </section>
+
+    <nav class="demo-switcher">
+        <a href="interactives-index.html" class="home" title="Index">◉</a>
+        <a href="i-01-scroll.html">01 Scroll</a>
+        <a href="i-02-case.html">02 Cas d'étude</a>
+        <a href="i-03-webgl.html" class="active">03 Particules</a>
+        <a href="i-04-tool.html">04 Outil</a>
+    </nav>
+
+<script>
+    // ============ EFFECT 1 : Particles attracted by cursor ============
+    (function() {
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouse = { x: -1000, y: -1000 };
+
+        function resize() {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            particles = [];
+            const count = Math.min(120, Math.floor((canvas.width * canvas.height) / 10000));
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: 0, vy: 0,
+                    size: 1 + Math.random() * 2.5,
+                    color: ['#3D5961', '#B8A89C', '#D4C6BD'][Math.floor(Math.random() * 3)]
+                });
+            }
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        canvas.parentElement.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            mouse.x = e.clientX - rect.left;
+            mouse.y = e.clientY - rect.top;
+        });
+        canvas.parentElement.addEventListener('mouseleave', () => {
+            mouse.x = -1000; mouse.y = -1000;
+        });
+
+        function loop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                const dx = mouse.x - p.x;
+                const dy = mouse.y - p.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 200 && dist > 0) {
+                    const force = (200 - dist) / 200 * 0.5;
+                    p.vx += (dx / dist) * force;
+                    p.vy += (dy / dist) * force;
+                }
+                p.vx *= 0.92;
+                p.vy *= 0.92;
+                p.x += p.vx;
+                p.y += p.vy;
+
+                // Soft drift to origin (slight)
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = p.color;
+                ctx.fill();
+            });
+            requestAnimationFrame(loop);
+        }
+        loop();
+    })();
+
+    // ============ EFFECT 2 : Trail fluid ============
+    (function() {
+        const canvas = document.getElementById('fluid');
+        const ctx = canvas.getContext('2d');
+        let trail = [];
+
+        function resize() {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        canvas.parentElement.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            trail.push({
+                x: e.clientX - rect.left,
+                y: e.clientY - rect.top,
+                life: 1,
+                size: 60 + Math.random() * 40
+            });
+            if (trail.length > 50) trail.shift();
+        });
+
+        function loop() {
+            ctx.fillStyle = 'rgba(61, 89, 97, 0.08)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            trail.forEach((p, i) => {
+                p.life -= 0.012;
+                if (p.life > 0) {
+                    const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size);
+                    grad.addColorStop(0, `rgba(212, 198, 189, ${p.life * 0.5})`);
+                    grad.addColorStop(1, `rgba(212, 198, 189, 0)`);
+                    ctx.fillStyle = grad;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            });
+            trail = trail.filter(p => p.life > 0);
+            requestAnimationFrame(loop);
+        }
+        loop();
+    })();
+
+    // ============ EFFECT 3 : Image distortion (canvas grid) ============
+    document.querySelectorAll('.distort-card canvas').forEach(canvas => {
+        const ctx = canvas.getContext('2d');
+        const card = canvas.parentElement;
+        const color1 = canvas.dataset.color1;
+        const color2 = canvas.dataset.color2;
+        let mouse = { x: -1000, y: -1000 };
+        let raf;
+
+        function resize() {
+            canvas.width = card.offsetWidth;
+            canvas.height = card.offsetHeight;
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        card.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            mouse.x = e.clientX - rect.left;
+            mouse.y = e.clientY - rect.top;
+        });
+        card.addEventListener('mouseleave', () => {
+            mouse.x = -1000; mouse.y = -1000;
+        });
+
+        function draw() {
+            const w = canvas.width, h = canvas.height;
+            const grad = ctx.createLinearGradient(0, 0, w, h);
+            grad.addColorStop(0, color1);
+            grad.addColorStop(1, color2);
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, w, h);
+
+            // Distortion grid (dots that move away from cursor)
+            const step = 30;
+            ctx.fillStyle = 'rgba(245, 240, 237, 0.35)';
+            for (let x = 0; x < w; x += step) {
+                for (let y = 0; y < h; y += step) {
+                    let dx = x - mouse.x, dy = y - mouse.y;
+                    const d = Math.sqrt(dx * dx + dy * dy);
+                    let offX = 0, offY = 0;
+                    if (d < 150 && d > 0) {
+                        const force = (150 - d) / 150 * 30;
+                        offX = (dx / d) * force;
+                        offY = (dy / d) * force;
+                    }
+                    ctx.beginPath();
+                    ctx.arc(x + offX, y + offY, 2, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+            raf = requestAnimationFrame(draw);
+        }
+        draw();
+    });
+</script>
+
+</body>
+</html>

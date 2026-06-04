@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4 boutons 2026 — Emilie</title>
+<link rel="icon" type="image/png" href="../assets/Logo-Emilie.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Italianno&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+        --bg: #121212;
+        --bg-2: #1C1C1C;
+        --secondary: #C8A882;
+        --secondary-dark: #A47864;
+        --text: #F5F0ED;
+        --text-soft: #B8A89C;
+        --border: rgba(200, 168, 130, 0.25);
+        --ease: cubic-bezier(0.65, 0, 0.35, 1);
+        --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    body {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        padding: 4rem 2rem 6rem;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    .page-head {
+        text-align: center;
+        margin-bottom: 4rem;
+    }
+    .page-head .name {
+        font-family: 'Italianno', cursive;
+        font-size: 4rem;
+        margin-bottom: 0.5rem;
+    }
+    .page-head .label {
+        font-size: 0.78rem;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--text-soft);
+    }
+    .page-head .back {
+        display: inline-block;
+        margin-top: 1.5rem;
+        font-size: 0.85rem;
+        color: var(--text-soft);
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 2px;
+        transition: color 0.3s var(--ease);
+    }
+    .page-head .back:hover { color: var(--secondary); }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+        gap: 2rem;
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+
+    .card {
+        background: var(--bg-2);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 3rem 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+    }
+    .card-info {
+        text-align: center;
+    }
+    .card-num {
+        font-family: 'Italianno', cursive;
+        font-size: 3rem;
+        color: var(--secondary);
+        line-height: 1;
+        margin-bottom: 0.5rem;
+    }
+    .card h2 {
+        font-weight: 500;
+        font-size: 1.3rem;
+        margin-bottom: 0.5rem;
+    }
+    .card p {
+        color: var(--text-soft);
+        font-size: 0.9rem;
+        max-width: 280px;
+    }
+    .demo-zone {
+        min-height: 140px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+
+    /* ========================================
+       BOUTON 1 — SPLIT TEXT REVEAL
+       ======================================== */
+    .btn-split {
+        display: inline-flex;
+        align-items: center;
+        padding: 1.1rem 2rem;
+        background: transparent;
+        border: 1.5px solid var(--secondary);
+        border-radius: 50px;
+        color: var(--text);
+        font-family: inherit;
+        font-size: 1rem;
+        cursor: pointer;
+        overflow: hidden;
+        white-space: nowrap;
+        transition: background 0.4s var(--ease), color 0.4s var(--ease);
+    }
+    .btn-split:hover {
+        background: var(--secondary);
+        color: var(--bg);
+    }
+    .btn-split .gap {
+        display: inline-block;
+        width: 0;
+        overflow: hidden;
+        transition: width 0.5s var(--ease-out);
+        position: relative;
+    }
+    .btn-split .gap svg {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+        transition: all 0.4s var(--ease-out) 0.2s;
+    }
+    .btn-split:hover .gap {
+        width: 36px;
+    }
+    .btn-split:hover .gap svg {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+    .btn-split .word-left { transition: transform 0.5s var(--ease-out); }
+    .btn-split .word-right { transition: transform 0.5s var(--ease-out); }
+    .btn-split:hover .word-left { transform: translateX(-4px); }
+    .btn-split:hover .word-right { transform: translateX(4px); }
+
+    /* ========================================
+       BOUTON 2 — TICKER LOOP
+       ======================================== */
+    .btn-ticker {
+        position: relative;
+        display: inline-block;
+        width: 260px;
+        padding: 1.2rem 0;
+        background: var(--secondary);
+        color: var(--bg);
+        border-radius: 50px;
+        overflow: hidden;
+        cursor: pointer;
+        font-size: 0.95rem;
+        font-weight: 500;
+    }
+    .ticker-track {
+        display: flex;
+        gap: 2.5rem;
+        white-space: nowrap;
+        animation: ticker-move 12s linear infinite;
+        width: max-content;
+    }
+    .ticker-track span {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.8rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+    }
+    .btn-ticker:hover .ticker-track {
+        animation-duration: 4s;
+    }
+    @keyframes ticker-move {
+        from { transform: translateX(0); }
+        to { transform: translateX(-50%); }
+    }
+
+    /* ========================================
+       BOUTON 3 — LIQUID BLOB MORPH
+       ======================================== */
+    .btn-blob {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.7rem;
+        padding: 1.3rem 2.5rem;
+        background: var(--secondary);
+        color: var(--bg);
+        font-family: inherit;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        border: none;
+        border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%;
+        animation: blob-idle 8s ease-in-out infinite;
+        transition: background 0.4s var(--ease), color 0.4s var(--ease);
+    }
+    .btn-blob:hover {
+        animation: blob-active 1.8s ease-in-out infinite;
+        background: var(--text);
+        color: var(--bg);
+    }
+    .btn-blob svg { transition: transform 0.4s var(--ease); }
+    .btn-blob:hover svg { transform: translateX(4px); }
+
+    @keyframes blob-idle {
+        0%, 100% { border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%; }
+        50% { border-radius: 45% 55% 40% 60% / 60% 45% 55% 40%; }
+    }
+    @keyframes blob-active {
+        0%, 100% { border-radius: 50% 50% 40% 60% / 45% 60% 40% 55%; }
+        33% { border-radius: 60% 35% 55% 45% / 50% 60% 30% 50%; }
+        66% { border-radius: 40% 60% 50% 50% / 55% 35% 60% 45%; }
+    }
+
+    /* ========================================
+       BOUTON 4 — MAGNETIC + RESSORT
+       ======================================== */
+    .magnetic-wrap {
+        display: inline-flex;
+        padding: 1rem;
+    }
+    .btn-magnetic {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.7rem;
+        padding: 1.2rem 2.2rem;
+        background: var(--secondary);
+        color: var(--bg);
+        border-radius: 50px;
+        font-family: inherit;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        border: none;
+        transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+                    background 0.4s var(--ease);
+        will-change: transform;
+    }
+    .btn-magnetic:hover {
+        background: var(--text);
+    }
+    .btn-magnetic svg { transition: transform 0.4s var(--ease); }
+    .btn-magnetic:hover svg { transform: translateX(4px); }
+
+</style>
+</head>
+<body>
+
+    <header class="page-head">
+        <p class="label">Tests boutons 2026</p>
+        <h1 class="name">4 directions</h1>
+        <a href="../index.html" class="back">← Retour à l'accueil</a>
+    </header>
+
+    <div class="grid">
+
+        <!-- BOUTON 1 -->
+        <div class="card">
+            <div class="card-info">
+                <div class="card-num">01</div>
+                <h2>Split Text Reveal</h2>
+                <p>Le texte s'écarte au hover, une flèche apparaît au centre.</p>
+            </div>
+            <div class="demo-zone">
+                <a href="../portfolio.html" class="btn-split">
+                    <span class="word-left">Voir mon</span>
+                    <span class="gap">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                    <span class="word-right">portfolio</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- BOUTON 2 -->
+        <div class="card">
+            <div class="card-info">
+                <div class="card-num">02</div>
+                <h2>Ticker Loop</h2>
+                <p>Texte qui défile en continu, accélère au hover.</p>
+            </div>
+            <div class="demo-zone">
+                <a href="../portfolio.html" class="btn-ticker">
+                    <div class="ticker-track">
+                        <span>Voir mon portfolio ✦</span>
+                        <span>Voir mon portfolio ✦</span>
+                        <span>Voir mon portfolio ✦</span>
+                        <span>Voir mon portfolio ✦</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- BOUTON 3 -->
+        <div class="card">
+            <div class="card-info">
+                <div class="card-num">03</div>
+                <h2>Liquid Blob</h2>
+                <p>Forme organique qui se déforme en permanence.</p>
+            </div>
+            <div class="demo-zone">
+                <a href="../portfolio.html" class="btn-blob">
+                    Voir mon portfolio
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                        <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- BOUTON 4 -->
+        <div class="card">
+            <div class="card-info">
+                <div class="card-num">04</div>
+                <h2>Magnetic Ressort</h2>
+                <p>Le bouton suit ta souris avec un effet de ressort physique.</p>
+            </div>
+            <div class="demo-zone">
+                <div class="magnetic-wrap" id="magnetic-wrap">
+                    <a href="../portfolio.html" class="btn-magnetic" id="magnetic-btn">
+                        Voir mon portfolio
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+<script>
+    // Magnetic button effect
+    const wrap = document.getElementById('magnetic-wrap');
+    const btn = document.getElementById('magnetic-btn');
+
+    if (wrap && btn) {
+        wrap.addEventListener('mousemove', (e) => {
+            const rect = wrap.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            btn.style.transform = `translate(${x * 0.35}px, ${y * 0.35}px)`;
+        });
+        wrap.addEventListener('mouseleave', () => {
+            btn.style.transform = '';
+        });
+    }
+</script>
+
+</body>
+</html>

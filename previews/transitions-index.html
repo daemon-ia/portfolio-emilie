@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transitions 2026 — Emilie</title>
+<link rel="icon" type="image/png" href="../assets/Logo-Emilie.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Italianno&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        background: #121212;
+        color: #F5F0ED;
+        min-height: 100vh;
+        padding: 4rem 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    h1 {
+        font-family: 'Italianno', cursive;
+        font-weight: 400;
+        font-size: clamp(3rem, 7vw, 5rem);
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+    .subtitle {
+        color: #B8A89C;
+        max-width: 600px;
+        text-align: center;
+        margin-bottom: 4rem;
+        font-size: 1.05rem;
+    }
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2rem;
+        max-width: 900px;
+        width: 100%;
+    }
+    .card {
+        background: #1C1C1C;
+        border: 1px solid rgba(200, 168, 130, 0.25);
+        border-radius: 20px;
+        padding: 2.5rem 2rem;
+        text-decoration: none;
+        color: inherit;
+        transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        text-align: center;
+    }
+    .card:hover {
+        transform: translateY(-6px);
+        border-color: #C8A882;
+    }
+    .card-num {
+        font-family: 'Italianno', cursive;
+        font-size: 3.5rem;
+        color: #C8A882;
+        line-height: 1;
+        margin-bottom: 1rem;
+    }
+    .card h2 {
+        font-weight: 500;
+        font-size: 1.4rem;
+        margin-bottom: 0.5rem;
+    }
+    .card p {
+        color: #B8A89C;
+        font-size: 0.95rem;
+        margin-bottom: 1.5rem;
+    }
+    .arrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+        color: #C8A882;
+    }
+    .card:hover .arrow svg { transform: translateX(4px); }
+    .arrow svg { transition: transform 0.3s ease; }
+    .back-link {
+        margin-top: 3rem;
+        font-size: 0.85rem;
+        color: #B8A89C;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(200, 168, 130, 0.25);
+        padding-bottom: 2px;
+    }
+    .back-link:hover { color: #F5F0ED; }
+</style>
+</head>
+<body>
+
+    <h1>Transitions 2026</h1>
+    <p class="subtitle">2 directions vraiment émergentes pour 2026. Clique pour tester chaque démo.</p>
+
+    <div class="grid">
+
+        <a href="transition-shared.html" class="card">
+            <div class="card-num">02</div>
+            <h2>Shared Element</h2>
+            <p>Ton logo "ER" voyage entre les vues : du centre/grand sur l'accueil au coin/petit sur le portfolio. Style iOS / Apple.</p>
+            <span class="arrow">Tester
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+        </a>
+
+        <a href="transition-mask.html" class="card">
+            <div class="card-num">03</div>
+            <h2>Mask SVG ondulé</h2>
+            <p>La nouvelle page apparaît à travers une forme calligraphique mocha qui ondule de gauche à droite. Cohérent avec ta signature manuscrite.</p>
+            <span class="arrow">Tester
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+        </a>
+
+    </div>
+
+    <a href="../index.html" class="back-link">← Retour à l'accueil</a>
+
+</body>
+</html>

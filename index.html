@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio d'Emilie Roupsard, web designer.">
+    <title>Emilie Roupsard — Web Designer</title>
+    <link rel="icon" type="image/png" href="assets/Logo-Emilie.png">
+    <link rel="preload" href="assets/fonts/Italianno.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="home">
+
+    <div class="page-transition" aria-hidden="true"></div>
+
+    <div class="logo-watermark" aria-hidden="true">
+        <img src="assets/Logo-Emilie.png" alt="">
+    </div>
+
+    <nav class="nav" id="main-nav">
+        <a href="index.html" class="nav-logo nav-logo-inner">
+            <img src="assets/Logo-Emilie.png" alt="Emilie Roupsard">
+        </a>
+        <button class="nav-burger" aria-label="Menu">
+            <span></span><span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active" data-word="bonjour">Accueil</a></li>
+            <li><a href="apropos.html" data-word="histoire">À propos</a></li>
+            <li><a href="portfolio.html" data-word="création">Projets</a></li>
+            <li><a href="contact.html" data-word="discutons">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main>
+
+        <section class="hero">
+            <div class="hero-text">
+                <h1>Emilie Roupsard</h1>
+                <p class="hero-role">Webdesigner</p>
+                <div class="hero-actions">
+                    <a href="portfolio.html" class="btn-underline">
+                        <span>Voir mon portfolio</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

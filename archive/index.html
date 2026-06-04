@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Emilie Roupsard — Web designer. Identité visuelle, sites web et applications.">
+    <title>Emilie Roupsard — Web Designer</title>
+    <link rel="icon" type="image/png" href="assets/Logo-Emilie.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="cursor" data-cursor></div>
+
+    <div class="page-loader" id="loader">
+        <span class="loader-text">Emilie Roupsard</span>
+    </div>
+
+    <nav class="navbar">
+        <a href="#home" class="logo" data-magnetic>
+            <img src="assets/Logo-Emilie.png" alt="Emilie Roupsard">
+        </a>
+        <div class="nav-meta">
+            <span class="status-dot"></span>
+            <span>Disponible 2026</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#work" data-magnetic>Projets</a></li>
+            <li><a href="#about" data-magnetic>À propos</a></li>
+            <li><a href="#process" data-magnetic>Process</a></li>
+            <li><a href="#contact" data-magnetic>Contact</a></li>
+        </ul>
+        <button class="burger" aria-label="Menu">
+            <span></span><span></span>
+        </button>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-grid">
+            <div class="hero-top">
+                <span class="hero-label">
+                    <span class="dot-pulse"></span>
+                    Portfolio · 2026
+                </span>
+                <span class="hero-location" id="local-time">Toulouse, FR</span>
+            </div>
+
+            <h1 class="hero-title">
+                <span class="line"><span class="word" data-split>Web</span> <em class="word" data-split>designer</em></span>
+                <span class="line"><span class="word" data-split>basée</span> <span class="word" data-split>en</span> <span class="word" data-split>France.</span></span>
+            </h1>
+
+            <div class="hero-bottom">
+                <p class="hero-desc">
+                    Je conçois des <em>identités visuelles</em>, des <em>sites web</em> et des <em>applications</em> sur-mesure — du premier croquis jusqu'à la mise en ligne.
+                </p>
+                <a href="#work" class="hero-cta" data-magnetic data-cursor-text="Découvrir">
+                    <span class="cta-circle">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                    <span class="cta-label">Voir mes projets</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="hero-shape" aria-hidden="true">
+            <div class="shape-inner"></div>
+        </div>
+    </section>
+
+    <section class="marquee" aria-hidden="true">
+        <div class="marquee-track">
+            <span>Identité visuelle</span><span class="sep">✦</span>
+            <span>Web design</span><span class="sep">✦</span>
+            <span>Applications</span><span class="sep">✦</span>
+            <span>UI / UX</span><span class="sep">✦</span>
+            <span>Direction artistique</span><span class="sep">✦</span>
+            <span>Identité visuelle</span><span class="sep">✦</span>
+            <span>Web design</span><span class="sep">✦</span>
+            <span>Applications</span><span class="sep">✦</span>
+            <span>UI / UX</span><span class="sep">✦</span>
+            <span>Direction artistique</span><span class="sep">✦</span>
+        </div>
+    </section>
+
+    <section id="work" class="work">
+        <header class="section-head">
+            <span class="section-num">— 01 / Travaux</span>
+            <h2 class="section-title">Sélection<br><em>récente.</em></h2>
+        </header>
+
+        <div class="bento">
+            <article class="bento-item bento-lg" data-category="design" data-cursor-text="Voir">
+                <div class="bento-media" style="background: linear-gradient(135deg, #D4C6BD, #B8A89C);">
+                    <div class="bento-overlay"></div>
+                </div>
+                <div class="bento-info">
+                    <span class="bento-year">2026</span>
+                    <h3>Identité — Maison Lumière</h3>
+                    <span class="bento-tag">Identité visuelle</span>
+                </div>
+            </article>
+
+            <article class="bento-item bento-sm" data-category="web" data-cursor-text="Voir">
+                <div class="bento-media" style="background: linear-gradient(135deg, #6B7F86, #3D5961);">
+                    <div class="bento-overlay"></div>
+                </div>
+                <div class="bento-info">
+                    <span class="bento-year">2026</span>
+                    <h3>Site vitrine — Atelier B.</h3>
+                    <span class="bento-tag">Web</span>
+                </div>
+            </article>
+
+            <article class="bento-item bento-sm" data-category="app" data-cursor-text="Voir">
+                <div class="bento-media" style="background: linear-gradient(135deg, #E8DCD3, #D4C6BD);">
+                    <div class="bento-overlay"></div>
+                </div>
+                <div class="bento-info">
+                    <span class="bento-year">2025</span>
+                    <h3>App mobile — Daily</h3>
+                    <span class="bento-tag">Application</span>
+                </div>
+            </article>
+
+            <article class="bento-item bento-md" data-category="design" data-cursor-text="Voir">
+                <div class="bento-media" style="background: linear-gradient(135deg, #C4B5A8, #8B9DA3);">
+                    <div class="bento-overlay"></div>
+                </div>
+                <div class="bento-info">
+                    <span class="bento-year">2025</span>
+                    <h3>Affiches & éditorial</h3>
+                    <span class="bento-tag">Design graphique</span>
+                </div>
+            </article>
+
+            <article class="bento-item bento-md" data-category="web" data-cursor-text="Voir">
+                <div class="bento-media" style="background: linear-gradient(135deg, #3D5961, #2A3F47);">
+                    <div class="bento-overlay"></div>
+                </div>
+                <div class="bento-info">
+                    <span class="bento-year">2025</span>
+                    <h3>E-commerce — Concept</h3>
+                    <span class="bento-tag">Web</span>
+                </div>
+            </article>
+
+            <article class="bento-item bento-lg" data-category="app" data-cursor-text="Voir">
+                <div class="bento-media" style="background: linear-gradient(135deg, #D4C6BD, #6B7F86);">
+                    <div class="bento-overlay"></div>
+                </div>
+                <div class="bento-info">
+                    <span class="bento-year">2024</span>
+                    <h3>Web app — Tableau de bord</h3>
+                    <span class="bento-tag">Application</span>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="about-sticky">
+            <div class="about-visual">
+                <div class="photo-wrap">
+                    <div class="photo-placeholder">ER</div>
+                </div>
+                <span class="photo-caption">— Bonjour</span>
+            </div>
+
+            <div class="about-content">
+                <header class="section-head">
+                    <span class="section-num">— 02 / À propos</span>
+                    <h2 class="section-title">Designer<br>du <em>détail.</em></h2>
+                </header>
+
+                <div class="about-text">
+                    <p class="lead">Je suis <em>Emilie Roupsard</em>, web designer passionnée par l'esthétique soignée et les expériences sur-mesure.</p>
+                    <p>De l'identité d'une marque à l'interface d'une application, je traduis vos idées en expériences visuelles cohérentes. Mon approche : écouter, comprendre, et créer avec rigueur.</p>
+                </div>
+
+                <div class="skill-tags">
+                    <span>Branding</span>
+                    <span>Direction artistique</span>
+                    <span>UI Design</span>
+                    <span>UX Research</span>
+                    <span>HTML / CSS</span>
+                    <span>JavaScript</span>
+                    <span>Webflow</span>
+                    <span>Figma</span>
+                    <span>Adobe Suite</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="process" class="process">
+        <header class="section-head">
+            <span class="section-num">— 03 / Process</span>
+            <h2 class="section-title">Comment on<br><em>travaille ensemble.</em></h2>
+        </header>
+
+        <div class="steps">
+            <article class="step">
+                <span class="step-num">01</span>
+                <h3>Découverte</h3>
+                <p>On échange autour de votre projet, vos objectifs, votre univers. Je pose les bonnes questions pour comprendre ce qui rend votre marque unique.</p>
+            </article>
+            <article class="step">
+                <span class="step-num">02</span>
+                <h3>Conception</h3>
+                <p>Recherches, moodboards, prototypes. J'explore plusieurs directions avant d'affiner celle qui vous ressemble vraiment.</p>
+            </article>
+            <article class="step">
+                <span class="step-num">03</span>
+                <h3>Livraison</h3>
+                <p>Production, intégration et mise en ligne. Vous repartez avec un projet abouti, des fichiers exploitables et de la documentation.</p>
+            </article>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <header class="section-head center">
+            <span class="section-num">— 04 / Contact</span>
+            <h2 class="contact-title">
+                <span class="line">On crée</span>
+                <span class="line"><em>ensemble?</em></span>
+            </h2>
+        </header>
+
+        <form id="contact-form" class="contact-form" action="contact.php" method="POST">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="name">01 — Votre nom</label>
+                    <input type="text" id="name" name="name" required placeholder="Jeanne Dupont">
+                </div>
+                <div class="form-group">
+                    <label for="email">02 — Email</label>
+                    <input type="email" id="email" name="email" required placeholder="hello@exemple.com">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="subject">03 — Sujet</label>
+                <input type="text" id="subject" name="subject" required placeholder="Identité visuelle, site web…">
+            </div>
+            <div class="form-group">
+                <label for="message">04 — Votre projet</label>
+                <textarea id="message" name="message" rows="5" required placeholder="Parlez-moi de votre projet, vos envies, vos contraintes…"></textarea>
+            </div>
+            <div class="form-submit">
+                <button type="submit" class="btn-submit" data-magnetic>
+                    <span>Envoyer</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <p id="form-status" class="form-status"></p>
+            </div>
+        </form>
+
+        <a href="mailto:emi.roupsard@gmail.com" class="contact-mail" data-magnetic data-cursor-text="Écrire">
+            emi.roupsard@gmail.com
+        </a>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <span class="footer-label">— Localisation</span>
+                <p>Toulouse, France</p>
+            </div>
+            <div class="footer-col">
+                <span class="footer-label">— Suivez-moi</span>
+                <ul class="socials">
+                    <li><a href="#" data-magnetic>Instagram <span>↗</span></a></li>
+                    <li><a href="#" data-magnetic>LinkedIn <span>↗</span></a></li>
+                    <li><a href="#" data-magnetic>Behance <span>↗</span></a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <span class="footer-label">— Email</span>
+                <p><a href="mailto:emi.roupsard@gmail.com" data-magnetic>emi.roupsard@gmail.com</a></p>
+            </div>
+        </div>
+        <div class="footer-big">EMILIE ROUPSARD</div>
+        <div class="footer-bottom">
+            <span>© <span id="year"></span> — Tous droits réservés</span>
+            <span>Conçu avec soin ✦</span>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

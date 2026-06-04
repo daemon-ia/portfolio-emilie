@@ -1,0 +1,10 @@
+# Données sensibles
+contact.php
+
+# Fichiers lourds générés
+js/italianno-b64.js
+
+# Système
+.DS_Store
+Thumbs.db
+desktop.ini

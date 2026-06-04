@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Démo 01 — Scroll Storytelling</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+        --bg: #F5F0ED;
+        --bg-2: #EFE7E1;
+        --secondary: #D4C6BD;
+        --secondary-dark: #B8A89C;
+        --text: #3D5961;
+        --text-soft: #6B7F86;
+        --border: rgba(61, 89, 97, 0.12);
+        --ease: cubic-bezier(0.65, 0, 0.35, 1);
+        --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+        font-family: 'Inter', sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+        padding-bottom: 90px;
+    }
+    em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 400; }
+    a { color: inherit; text-decoration: none; }
+
+    .intro {
+        min-height: 70vh;
+        padding: 8rem 2rem 4rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+    .intro .num {
+        font-size: 0.78rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--text-soft);
+        margin-bottom: 1.5rem;
+    }
+    .intro h1 {
+        font-family: 'Fraunces', serif;
+        font-weight: 400;
+        font-size: clamp(3rem, 9vw, 7rem);
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        max-width: 12ch;
+    }
+    .scroll-hint {
+        margin-top: 3rem;
+        font-size: 0.85rem;
+        color: var(--text-soft);
+        animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-8px); }
+    }
+
+    /* ============ 1. MASK REVEAL ============ */
+    .mask-section {
+        min-height: 100vh;
+        padding: 6rem 2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+    .mask-text {
+        font-family: 'Fraunces', serif;
+        font-weight: 400;
+        font-size: clamp(2.5rem, 7vw, 6rem);
+        line-height: 1.1;
+        letter-spacing: -0.03em;
+        max-width: 18ch;
+    }
+    .mask-text .word {
+        display: inline-block;
+        background: linear-gradient(
+            to right,
+            var(--text) 0%,
+            var(--text) 50%,
+            rgba(61, 89, 97, 0.18) 50%,
+            rgba(61, 89, 97, 0.18) 100%
+        );
+        background-size: 200% 100%;
+        background-position: 100% 0;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        transition: background-position 0.6s var(--ease-out);
+    }
+    .mask-text .word.lit {
+        background-position: 0 0;
+    }
+    .section-label {
+        font-size: 0.78rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--text-soft);
+        margin-bottom: 3rem;
+    }
+
+    /* ============ 2. CLIP REVEAL IMAGE ============ */
+    .clip-section {
+        min-height: 100vh;
+        padding: 6rem 2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: var(--bg-2);
+    }
+    .clip-wrap {
+        max-width: 900px;
+        width: 100%;
+        margin: 2rem auto;
+        position: relative;
+    }
+    .clip-image {
+        width: 100%;
+        aspect-ratio: 16/9;
+        background: linear-gradient(135deg, var(--secondary-dark), var(--text));
+        border-radius: 24px;
+        clip-path: inset(40% 30% 40% 30% round 24px);
+        transition: clip-path 1.2s var(--ease-out);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+    }
+    .clip-image.revealed {
+        clip-path: inset(0% 0% 0% 0% round 24px);
+    }
+    .clip-image::after {
+        content: 'IDENTITÉ MAISON LUMIÈRE';
+        font-family: 'Fraunces', serif;
+        font-style: italic;
+        font-size: clamp(1.5rem, 3vw, 3rem);
+        color: rgba(245, 240, 237, 0.4);
+        letter-spacing: 0.1em;
+    }
+    .clip-caption {
+        text-align: center;
+        margin-top: 2rem;
+        font-family: 'Fraunces', serif;
+        font-style: italic;
+        font-size: 1.2rem;
+        color: var(--text-soft);
+    }
+
+    /* ============ 3. HORIZONTAL SCROLL ============ */
+    .horizontal-section {
+        height: 400vh;
+        position: relative;
+    }
+    .horizontal-pin {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+    }
+    .horizontal-track {
+        display: flex;
+        gap: 2rem;
+        padding: 0 4rem;
+        will-change: transform;
+    }
+    .h-card {
+        flex: 0 0 70vw;
+        max-width: 700px;
+        aspect-ratio: 4/5;
+        border-radius: 24px;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        color: var(--bg);
+        position: relative;
+        overflow: hidden;
+        box-shadow:
+            0 12px 30px rgba(61, 89, 97, 0.1),
+            0 28px 60px rgba(61, 89, 97, 0.15);
+    }
+    .h-card::after {
+        content: '';
+        position: absolute; inset: 0;
+        background: linear-gradient(180deg, transparent 50%, rgba(61, 89, 97, 0.6));
+    }
+    .h-card > * { position: relative; z-index: 1; }
+    .h-card h3 {
+        font-family: 'Fraunces', serif;
+        font-weight: 400;
+        font-size: clamp(1.5rem, 3vw, 2.5rem);
+        line-height: 1.1;
+        margin-bottom: 0.5rem;
+    }
+    .h-card span {
+        font-size: 0.85rem;
+        opacity: 0.85;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+    }
+    .h-title-overlay {
+        position: absolute;
+        top: 2rem; left: 4rem;
+        font-size: 0.85rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--text-soft);
+    }
+
+    .h-title-big {
+        position: absolute;
+        top: 50%;
+        left: 4rem;
+        transform: translateY(-50%);
+        font-family: 'Fraunces', serif;
+        font-style: italic;
+        font-weight: 400;
+        font-size: clamp(3rem, 8vw, 7rem);
+        line-height: 0.9;
+        color: rgba(61, 89, 97, 0.06);
+        pointer-events: none;
+        z-index: -1;
+    }
+
+    .scroll-progress {
+        position: absolute;
+        bottom: 3rem;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 200px;
+        height: 2px;
+        background: rgba(61, 89, 97, 0.15);
+        border-radius: 2px;
+        overflow: hidden;
+    }
+    .scroll-progress-bar {
+        height: 100%;
+        background: var(--text);
+        width: 0%;
+        transition: width 0.1s linear;
+    }
+
+    /* ============ FINAL ============ */
+    .end {
+        padding: 8rem 2rem;
+        text-align: center;
+    }
+    .end h2 {
+        font-family: 'Fraunces', serif;
+        font-style: italic;
+        font-weight: 400;
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        line-height: 1.1;
+        max-width: 18ch;
+        margin: 0 auto;
+    }
+
+    /* ============ SWITCHER ============ */
+    .demo-switcher {
+        position: fixed;
+        bottom: 16px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 200;
+        background: var(--text);
+        color: var(--bg);
+        border-radius: 50px;
+        padding: 0.4rem;
+        display: flex;
+        gap: 0.25rem;
+        box-shadow:
+            0 1px 0 rgba(255, 255, 255, 0.15) inset,
+            0 8px 24px rgba(61, 89, 97, 0.25);
+        font-size: 0.8rem;
+    }
+    .demo-switcher a {
+        padding: 0.5rem 0.9rem;
+        border-radius: 50px;
+        transition: background 0.3s var(--ease);
+        opacity: 0.65;
+    }
+    .demo-switcher a:hover { opacity: 1; }
+    .demo-switcher a.active {
+        background: var(--bg);
+        color: var(--text);
+        opacity: 1;
+    }
+    .demo-switcher .home {
+        padding: 0.5rem 0.7rem;
+        opacity: 0.5;
+    }
+    @media (max-width: 600px) {
+        .demo-switcher { font-size: 0.7rem; padding: 0.3rem; }
+        .demo-switcher a { padding: 0.4rem 0.6rem; }
+        .h-card { flex: 0 0 80vw; }
+        .h-title-overlay, .h-title-big { left: 2rem; }
+        .horizontal-track { padding: 0 2rem; }
+    }
+</style>
+</head>
+<body>
+
+    <section class="intro">
+        <span class="num">— 01 / Scroll Storytelling</span>
+        <h1>Scrolle pour <em>découvrir</em></h1>
+        <div class="scroll-hint">↓ scroll</div>
+    </section>
+
+    <section class="mask-section">
+        <span class="section-label">Effet 1 · Texte qui s'allume</span>
+        <p class="mask-text" id="mask-text">
+            <span class="word">Je</span>
+            <span class="word">conçois</span>
+            <span class="word">des</span>
+            <span class="word">expériences</span>
+            <span class="word">visuelles</span>
+            <span class="word">qui</span>
+            <span class="word">marquent.</span>
+        </p>
+    </section>
+
+    <section class="clip-section">
+        <span class="section-label">Effet 2 · Image qui se révèle</span>
+        <div class="clip-wrap">
+            <div class="clip-image" id="clip-image"></div>
+            <p class="clip-caption">— Une <em>marque sur-mesure</em>, pensée du symbole au pixel.</p>
+        </div>
+    </section>
+
+    <section class="horizontal-section">
+        <div class="horizontal-pin">
+            <span class="h-title-overlay">Effet 3 · Scroll horizontal</span>
+            <span class="h-title-big">Projets <em>récents</em></span>
+            <div class="horizontal-track" id="h-track">
+                <article class="h-card" style="background: linear-gradient(135deg, #D4C6BD, #B8A89C);">
+                    <h3>Maison Lumière</h3>
+                    <span>Identité visuelle · 2026</span>
+                </article>
+                <article class="h-card" style="background: linear-gradient(135deg, #6B7F86, #3D5961);">
+                    <h3>Atelier B.</h3>
+                    <span>Site vitrine · 2026</span>
+                </article>
+                <article class="h-card" style="background: linear-gradient(135deg, #E8DCD3, #D4C6BD);">
+                    <h3>Daily</h3>
+                    <span>Application · 2025</span>
+                </article>
+                <article class="h-card" style="background: linear-gradient(135deg, #3D5961, #2A3F47);">
+                    <h3>Concept E-shop</h3>
+                    <span>E-commerce · 2025</span>
+                </article>
+            </div>
+            <div class="scroll-progress"><div class="scroll-progress-bar" id="progress-bar"></div></div>
+        </div>
+    </section>
+
+    <section class="end">
+        <h2>Voilà. Trois effets <em>cinématiques</em> pour raconter une histoire au scroll.</h2>
+    </section>
+
+    <nav class="demo-switcher">
+        <a href="interactives-index.html" class="home" title="Index">◉</a>
+        <a href="i-01-scroll.html" class="active">01 Scroll</a>
+        <a href="i-02-case.html">02 Cas d'étude</a>
+        <a href="i-03-webgl.html">03 Particules</a>
+        <a href="i-04-tool.html">04 Outil</a>
+    </nav>
+
+<script>
+    // ===== EFFECT 1 : Words lit on scroll =====
+    const words = document.querySelectorAll('#mask-text .word');
+    function updateWords() {
+        const rect = document.getElementById('mask-text').getBoundingClientRect();
+        const center = window.innerHeight / 2;
+        const start = rect.top;
+        const end = rect.bottom;
+        words.forEach((word, i) => {
+            const wordRect = word.getBoundingClientRect();
+            const wordCenter = wordRect.top + wordRect.height / 2;
+            if (wordCenter < center + 100) {
+                word.classList.add('lit');
+            } else {
+                word.classList.remove('lit');
+            }
+        });
+    }
+    window.addEventListener('scroll', updateWords);
+    updateWords();
+
+    // ===== EFFECT 2 : Clip reveal image =====
+    const clipObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+            } else if (entry.boundingClientRect.top > 0) {
+                entry.target.classList.remove('revealed');
+            }
+        });
+    }, { threshold: 0.5 });
+    clipObserver.observe(document.getElementById('clip-image'));
+
+    // ===== EFFECT 3 : Horizontal scroll on pin =====
+    const horizontalSection = document.querySelector('.horizontal-section');
+    const track = document.getElementById('h-track');
+    const progressBar = document.getElementById('progress-bar');
+
+    function updateHorizontal() {
+        const rect = horizontalSection.getBoundingClientRect();
+        const totalScroll = rect.height - window.innerHeight;
+        const scrolled = Math.max(0, -rect.top);
+        const progress = Math.min(1, scrolled / totalScroll);
+
+        const maxX = track.scrollWidth - window.innerWidth;
+        track.style.transform = `translateX(${-maxX * progress}px)`;
+        progressBar.style.width = (progress * 100) + '%';
+    }
+    window.addEventListener('scroll', updateHorizontal);
+    updateHorizontal();
+</script>
+
+</body>
+</html>

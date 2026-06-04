@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5 fonds tendance 2026 — Emilie</title>
+<link rel="icon" type="image/png" href="../assets/Logo-Emilie.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Italianno&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+        --bg: #121212;
+        --bg-2: #1C1C1C;
+        --secondary: #C8A882;
+        --secondary-dark: #A47864;
+        --text: #F5F0ED;
+        --text-soft: #B8A89C;
+        --border: rgba(200, 168, 130, 0.25);
+        --ease: cubic-bezier(0.65, 0, 0.35, 1);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ===== HERO RÉUTILISÉ DANS CHAQUE SECTION ===== */
+    .demo-hero {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+    }
+    .demo-hero h1 {
+        font-family: 'Italianno', cursive;
+        font-weight: 400;
+        font-size: clamp(4rem, 11vw, 8rem);
+        line-height: 1;
+        color: var(--text);
+        margin-bottom: 0.3rem;
+    }
+    .demo-hero .role {
+        font-size: clamp(0.9rem, 1.3vw, 1.1rem);
+        letter-spacing: 0.35em;
+        text-transform: uppercase;
+        color: var(--secondary-dark);
+        margin-bottom: 2.5rem;
+    }
+    .demo-btn {
+        position: relative;
+        display: inline-flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        padding: 0.5rem 0.25rem;
+        font-size: 1.15rem;
+    }
+    .demo-btn .row {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.7rem;
+    }
+    .demo-btn svg.arrow { transition: transform 0.5s var(--ease); }
+    .demo-btn:hover svg.arrow { transform: translateX(8px); }
+    .demo-btn .underline {
+        width: 100%;
+        height: 12px;
+    }
+    .demo-btn .underline path {
+        stroke: var(--secondary);
+        stroke-width: 1.6;
+        fill: none;
+        stroke-linecap: round;
+        stroke-dasharray: 240;
+        stroke-dashoffset: 240;
+        transition: stroke-dashoffset 1s var(--ease);
+    }
+    .demo-btn:hover .underline path { stroke-dashoffset: 0; }
+
+    /* ===== SECTIONS ===== */
+    .demo-section {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 6rem 2rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .section-label {
+        position: absolute;
+        top: 2rem;
+        left: 2rem;
+        z-index: 3;
+        font-size: 0.78rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--text-soft);
+    }
+    .section-label span {
+        font-family: 'Italianno', cursive;
+        font-size: 1.5rem;
+        color: var(--secondary);
+        letter-spacing: 0;
+        text-transform: none;
+        margin-right: 0.4rem;
+        vertical-align: middle;
+    }
+
+    /* ============ EFFET 1 : GRAIN ============ */
+    .bg-grain {
+        background: var(--bg);
+    }
+    .bg-grain::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        opacity: 0.35;
+        mix-blend-mode: screen;
+        background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.78 0 0 0 0 0.66 0 0 0 0 0.51 0 0 0 0.6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+        background-size: 200px 200px;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    /* ============ EFFET 2 : PARTICLES ============ */
+    .bg-particles canvas {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    /* ============ EFFET 3 : SPOTLIGHT ============ */
+    .bg-spotlight {
+        --mx: 50%;
+        --my: 50%;
+    }
+    .bg-spotlight::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+            500px circle at var(--mx) var(--my),
+            rgba(200, 168, 130, 0.18) 0%,
+            rgba(200, 168, 130, 0.05) 30%,
+            transparent 70%
+        );
+        z-index: 1;
+        pointer-events: none;
+        transition: background 0.1s linear;
+    }
+
+    /* ============ EFFET 4 : GRILLE ============ */
+    .bg-grid::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+            linear-gradient(rgba(200, 168, 130, 0.06) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(200, 168, 130, 0.06) 1px, transparent 1px);
+        background-size: 60px 60px;
+        z-index: 1;
+        pointer-events: none;
+        mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+        -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+    }
+
+    /* ============ EFFET 5 : AURORA ============ */
+    .bg-aurora::before {
+        content: '';
+        position: absolute;
+        inset: -50%;
+        background:
+            radial-gradient(at 20% 30%, rgba(200, 168, 130, 0.35) 0%, transparent 50%),
+            radial-gradient(at 80% 20%, rgba(164, 120, 100, 0.3) 0%, transparent 50%),
+            radial-gradient(at 50% 80%, rgba(232, 220, 211, 0.2) 0%, transparent 50%),
+            radial-gradient(at 70% 60%, rgba(200, 168, 130, 0.25) 0%, transparent 50%);
+        animation: aurora-shift 20s ease-in-out infinite;
+        z-index: 1;
+        filter: blur(40px);
+        pointer-events: none;
+    }
+    @keyframes aurora-shift {
+        0%, 100% { transform: translate(0, 0) rotate(0deg); }
+        33% { transform: translate(-10%, 5%) rotate(2deg); }
+        66% { transform: translate(5%, -8%) rotate(-2deg); }
+    }
+
+    /* ===== NAVIGATION BAR ===== */
+    .nav-bar {
+        position: fixed;
+        bottom: 16px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 100;
+        background: rgba(28, 28, 28, 0.9);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        color: var(--text);
+        border: 1px solid var(--border);
+        border-radius: 50px;
+        padding: 0.4rem;
+        display: flex;
+        gap: 0.25rem;
+        box-shadow:
+            0 1px 0 rgba(255, 255, 255, 0.05) inset,
+            0 8px 24px rgba(0, 0, 0, 0.4);
+        font-size: 0.75rem;
+    }
+    .nav-bar a {
+        padding: 0.55rem 0.9rem;
+        border-radius: 50px;
+        opacity: 0.55;
+        transition: all 0.3s var(--ease);
+        white-space: nowrap;
+    }
+    .nav-bar a:hover { opacity: 1; }
+    .nav-bar a.active {
+        background: var(--secondary);
+        color: var(--bg);
+        opacity: 1;
+    }
+    .nav-bar .home {
+        padding: 0.55rem 0.7rem;
+        opacity: 0.4;
+    }
+
+    @media (max-width: 700px) {
+        .nav-bar { font-size: 0.65rem; padding: 0.3rem; }
+        .nav-bar a { padding: 0.45rem 0.6rem; }
+    }
+</style>
+</head>
+<body>
+
+    <!-- EFFET 1 : GRAIN -->
+    <section class="demo-section bg-grain" id="grain">
+        <div class="section-label"><span>01</span> Grain / Texture papier</div>
+        <div class="demo-hero">
+            <h1>Emilie Roupsard</h1>
+            <p class="role">Webdesigner</p>
+            <a href="#" class="demo-btn">
+                <div class="row">
+                    <span>Voir mon portfolio</span>
+                    <svg class="arrow" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <svg class="underline" viewBox="0 0 220 12" aria-hidden="true">
+                    <path d="M 2,7 Q 30,2 60,6 T 120,7 T 180,4 T 218,7"/>
+                </svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- EFFET 2 : PARTICLES -->
+    <section class="demo-section bg-particles" id="particles">
+        <canvas></canvas>
+        <div class="section-label"><span>02</span> Particles / Étoiles</div>
+        <div class="demo-hero">
+            <h1>Emilie Roupsard</h1>
+            <p class="role">Webdesigner</p>
+            <a href="#" class="demo-btn">
+                <div class="row">
+                    <span>Voir mon portfolio</span>
+                    <svg class="arrow" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <svg class="underline" viewBox="0 0 220 12" aria-hidden="true">
+                    <path d="M 2,7 Q 30,2 60,6 T 120,7 T 180,4 T 218,7"/>
+                </svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- EFFET 3 : SPOTLIGHT -->
+    <section class="demo-section bg-spotlight" id="spotlight">
+        <div class="section-label"><span>03</span> Spotlight / Halo souris</div>
+        <div class="demo-hero">
+            <h1>Emilie Roupsard</h1>
+            <p class="role">Webdesigner</p>
+            <a href="#" class="demo-btn">
+                <div class="row">
+                    <span>Voir mon portfolio</span>
+                    <svg class="arrow" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <svg class="underline" viewBox="0 0 220 12" aria-hidden="true">
+                    <path d="M 2,7 Q 30,2 60,6 T 120,7 T 180,4 T 218,7"/>
+                </svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- EFFET 4 : GRILLE -->
+    <section class="demo-section bg-grid" id="grid">
+        <div class="section-label"><span>04</span> Grille / Lignes fines</div>
+        <div class="demo-hero">
+            <h1>Emilie Roupsard</h1>
+            <p class="role">Webdesigner</p>
+            <a href="#" class="demo-btn">
+                <div class="row">
+                    <span>Voir mon portfolio</span>
+                    <svg class="arrow" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <svg class="underline" viewBox="0 0 220 12" aria-hidden="true">
+                    <path d="M 2,7 Q 30,2 60,6 T 120,7 T 180,4 T 218,7"/>
+                </svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- EFFET 5 : AURORA -->
+    <section class="demo-section bg-aurora" id="aurora">
+        <div class="section-label"><span>05</span> Aurora / Northern Lights</div>
+        <div class="demo-hero">
+            <h1>Emilie Roupsard</h1>
+            <p class="role">Webdesigner</p>
+            <a href="#" class="demo-btn">
+                <div class="row">
+                    <span>Voir mon portfolio</span>
+                    <svg class="arrow" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <svg class="underline" viewBox="0 0 220 12" aria-hidden="true">
+                    <path d="M 2,7 Q 30,2 60,6 T 120,7 T 180,4 T 218,7"/>
+                </svg>
+            </a>
+        </div>
+    </section>
+
+    <nav class="nav-bar">
+        <a href="../index.html" class="home">◉</a>
+        <a href="#grain">01 Grain</a>
+        <a href="#particles">02 Particles</a>
+        <a href="#spotlight">03 Spotlight</a>
+        <a href="#grid">04 Grille</a>
+        <a href="#aurora">05 Aurora</a>
+    </nav>
+
+<script>
+    // ===== Highlight active section in nav =====
+    const sections = document.querySelectorAll('.demo-section');
+    const navLinks = document.querySelectorAll('.nav-bar a:not(.home)');
+    const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+                navLinks.forEach(a => a.classList.remove('active'));
+                const link = document.querySelector(`.nav-bar a[href="#${entry.target.id}"]`);
+                if (link) link.classList.add('active');
+            }
+        });
+    }, { threshold: 0.5 });
+    sections.forEach(s => sectionObserver.observe(s));
+
+    // ===== Effet 2 : Particles =====
+    (function() {
+        const section = document.getElementById('particles');
+        const canvas = section.querySelector('canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resize() {
+            canvas.width = section.offsetWidth;
+            canvas.height = section.offsetHeight;
+            particles = [];
+            const count = Math.floor((canvas.width * canvas.height) / 12000);
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.2,
+                    vy: (Math.random() - 0.5) * 0.2,
+                    size: 0.5 + Math.random() * 1.5,
+                    opacity: 0.2 + Math.random() * 0.6,
+                    twinkleSpeed: 0.005 + Math.random() * 0.02,
+                    twinkleOffset: Math.random() * Math.PI * 2
+                });
+            }
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        let t = 0;
+        function loop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            t += 1;
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                if (p.x < 0) p.x = canvas.width;
+                if (p.x > canvas.width) p.x = 0;
+                if (p.y < 0) p.y = canvas.height;
+                if (p.y > canvas.height) p.y = 0;
+                const twinkle = (Math.sin(t * p.twinkleSpeed + p.twinkleOffset) + 1) / 2;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(200, 168, 130, ${p.opacity * twinkle})`;
+                ctx.fill();
+            });
+            requestAnimationFrame(loop);
+        }
+        loop();
+    })();
+
+    // ===== Effet 3 : Spotlight follows mouse =====
+    (function() {
+        const section = document.getElementById('spotlight');
+        section.addEventListener('mousemove', (e) => {
+            const rect = section.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            section.style.setProperty('--mx', x + '%');
+            section.style.setProperty('--my', y + '%');
+        });
+    })();
+</script>
+
+</body>
+</html>

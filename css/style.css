@@ -644,15 +644,7 @@ main {
 }
 
 @media (max-width: 768px) {
-    /* Scrollbar cachée sur mobile */
-    ::-webkit-scrollbar { display: none; }
-    * { scrollbar-width: none; -ms-overflow-style: none; }
-
-    /* Accueil plein écran sans scroll */
-    body.home {
-        height: 100dvh;
-        overflow: hidden;
-    }
+    /* Accueil : plein écran sans scroll, logo watermark préservé */
     body.home main {
         height: 100dvh;
         overflow: hidden;

@@ -373,6 +373,16 @@ async function navigateTo(url) {
         if (a.getAttribute('href').split('/').pop() === targetPage) a.classList.add('active');
     });
 
+    // Gérer la classe nav-logo-inner selon la page (home = logo masqué dans nav)
+    const navLogo = document.querySelector('.nav-logo');
+    if (navLogo) {
+        if (targetPage === 'index.html' || targetPage === '') {
+            navLogo.classList.add('nav-logo-inner');
+        } else {
+            navLogo.classList.remove('nav-logo-inner');
+        }
+    }
+
     window.scrollTo(0, 0);
     initPage();
     document.querySelectorAll('.reveal-section').forEach(s => s.classList.add('visible'));

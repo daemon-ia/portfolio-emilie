@@ -75,16 +75,6 @@ function initPage() {
     const yr = document.getElementById('year');
     if (yr) yr.textContent = new Date().getFullYear();
 
-    // Accordion À propos
-    const accItems = document.querySelectorAll('.acc-item');
-    accItems.forEach(item => {
-        const trigger = item.querySelector('.acc-trigger');
-        if (trigger) trigger.addEventListener('click', () => {
-            const isOpen = item.classList.contains('open');
-            document.querySelectorAll('.acc-item').forEach(i => i.classList.remove('open'));
-            if (!isOpen) item.classList.add('open');
-        });
-    });
 
     // Sections lumineuses
     const revealSections = document.querySelectorAll('.reveal-section');
@@ -102,7 +92,8 @@ function initPage() {
 
     // Filtre projets
     const filterBtns = document.querySelectorAll('.filter-btn');
-    if (filterBtns.length) {
+    if (filterBtns.length && !filterBtns[0].dataset.init) {
+        filterBtns.forEach(b => b.dataset.init = '1');
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 filterBtns.forEach(b => b.classList.remove('active'));
@@ -117,7 +108,8 @@ function initPage() {
 
     // Modal projets
     const modal = document.getElementById('projectModal');
-    if (modal) {
+    if (modal && !modal.dataset.init) {
+        modal.dataset.init = '1';
         const backdrop = modal.querySelector('.modal-backdrop');
         const closeBtn = modal.querySelector('.modal-close');
 
@@ -275,7 +267,8 @@ function initPage() {
 
     // Formulaire contact
     const contactForm = document.getElementById('contactForm');
-    if (contactForm) {
+    if (contactForm && !contactForm.dataset.init) {
+        contactForm.dataset.init = '1';
         contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const status = document.getElementById('formStatus');
@@ -309,23 +302,25 @@ function initPage() {
 // Overlay de transition — keyframes CSS (plus fiable que les transitions)
 const overlay = document.createElement('div');
 overlay.className = 'page-overlay';
+const overlayLogo = document.createElement('img');
+overlayLogo.src = 'assets/Logo-Emilie.png';
+overlayLogo.className = 'page-overlay-logo';
+overlayLogo.setAttribute('aria-hidden', 'true');
+overlay.appendChild(overlayLogo);
 document.body.appendChild(overlay);
 
 let isNavigating = false;
 
 function overlayShow() {
     return new Promise(resolve => {
-        overlay.className = 'page-overlay show';
-        setTimeout(resolve, 330);
+        overlay.classList.add('show');
+        setTimeout(resolve, 950);
     });
 }
 
 function overlayHide() {
-    overlay.className = 'page-overlay hide';
-    setTimeout(() => {
-        overlay.className = 'page-overlay';
-        isNavigating = false;
-    }, 330);
+    overlay.classList.remove('show');
+    setTimeout(() => { isNavigating = false; }, 950);
 }
 
 async function navigateTo(url) {
@@ -380,9 +375,10 @@ async function navigateTo(url) {
 
     window.scrollTo(0, 0);
     initPage();
+    document.querySelectorAll('.reveal-section').forEach(s => s.classList.add('visible'));
 
-    // Révéler le nouveau contenu
-    overlayHide();
+    // Attendre que le navigateur rende le nouveau contenu avant de lever l'overlay
+    requestAnimationFrame(() => requestAnimationFrame(() => overlayHide()));
 }
 
 // Intercepter tous les clics sur liens internes
@@ -394,6 +390,7 @@ document.addEventListener('click', (e) => {
         href.startsWith('#') ||
         href.startsWith('mailto:') ||
         href.startsWith('tel:') ||
+        href.startsWith('//') ||
         href.includes('://') ||
         link.target === '_blank') return;
     e.preventDefault();

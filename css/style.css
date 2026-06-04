@@ -643,6 +643,30 @@ main {
     .hero h1 { white-space: normal; }
 }
 
+@media (max-width: 768px) {
+    /* Scrollbar cachée sur mobile */
+    ::-webkit-scrollbar { display: none; }
+    * { scrollbar-width: none; -ms-overflow-style: none; }
+
+    /* Accueil plein écran sans scroll */
+    body.home {
+        height: 100dvh;
+        overflow: hidden;
+    }
+    body.home main {
+        height: 100dvh;
+        overflow: hidden;
+        padding-top: 0;
+    }
+    body.home .hero {
+        height: 100dvh;
+        min-height: unset;
+        padding: 0 2rem;
+        justify-content: center;
+    }
+    body.home .hero-role { margin-bottom: 3rem; }
+}
+
 .hero-role {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-weight: 400;
